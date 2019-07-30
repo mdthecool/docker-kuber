@@ -161,4 +161,10 @@ docker container run -d -e MYSQL_ROOT_PASSWORD=welcome1  -v customerdb:/var/lib/
         
 #### "Source": "/var/lib/docker/volumes/customerdb/_data", known location to "Destination": "/var/lib/mysql",
 
+Starting mysql prompt from using docker : 
+
+docker exec -it c9e80dcdafa6 mysql -uroot -pwelcome1 
+
+
+
 
