@@ -50,11 +50,17 @@ $
 
 #### Things are related and to optimze RUN command can be changed using ; or && 
 
+
+## Docker process management 
+
 #### Running docker httpd in FOREGROUND so that docker can monitor httpd process
 docker container run -d app httpd -D FOREGROUND 
 
 process pid = 1 is init process /sbin/init noembd norestore 
 
-But, in the docker httpd is root process. 
+But, in the docker httpd is root process. The process run on host system, the process isolation is not practial, but docker presents its view of the process. 
 
+Docker client talks to docker using socker file created /var/docker 
+
+## 
 
