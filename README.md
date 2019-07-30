@@ -40,6 +40,6 @@ app                 latest              b37655234215        38 seconds ago      
 app                 1                   a332e4655d9f        23 minutes ago      10.6MB
 $ 
 
-. represents the docker image build context where Dockerfile is present. 
+ * . represents the docker image build context where Dockerfile is present. 
 
-The direcotry location is treated as docker context. Dockerfile should be with in the context. 
+* The direcotry location is treated as docker context. Dockerfile should be with in the context. 
