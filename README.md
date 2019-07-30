@@ -49,3 +49,8 @@ $
 #### docker image build --no-cache to make sure clean building of image without cache usage
 
 #### Things are related and to optimze RUN command can be changed using ; or && 
+
+#### Running docker httpd in FOREGROUND so that docker can monitor httpd process
+docker container run -d app httpd -D FOREGROUND 
+
+
