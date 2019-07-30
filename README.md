@@ -165,6 +165,19 @@ Starting mysql prompt from using docker :
 
 docker exec -it c9e80dcdafa6 mysql -uroot -pwelcome1 
 
+#### Source path to destination path  BIND 
 
+docker run -d -v /tmp/logs /var/log/apache2 app
 
-
+"Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/tmp/logs",
+                "Destination": "/var/log/apache2",
+                "Mode": "",
+                "RW": true,
+                "Propagation": "rprivate"
+            }
+        ],
+        
+        binds 
