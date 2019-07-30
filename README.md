@@ -53,4 +53,8 @@ $
 #### Running docker httpd in FOREGROUND so that docker can monitor httpd process
 docker container run -d app httpd -D FOREGROUND 
 
+process pid = 1 is init process /sbin/init noembd norestore 
+
+But, in the docker httpd is root process. 
+
 
