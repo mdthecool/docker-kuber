@@ -109,4 +109,32 @@ docker container logs -f 09bdf43c0784
 
 
 
+### Volumes and mount management 
+
+Mounts will represents volumes on the docker container. 
+
+/var/log/apache2  can be mounted home. 
+
+"Mounts": [
+            {
+                "Type": "volume",
+                "Name": "d09e682f4babe908ac445fcf6b37c85bd58fd3b64defc140edaec7fc6993e53f",
+                "Source": "/var/lib/docker/volumes/d09e682f4babe908ac445fcf6b37c85bd58fd3b64defc140edaec7fc6993e53f/_data",
+                "Destination": "/var/log/apache2",
+                "Driver": "local",
+                "Mode": "",
+                "RW": true,
+                "Propagation": ""
+            }
+        ]
+        
+
+#### docker run -d -v /var/log/apache2 app
+
+Below is the default mount location: 
+
+#### "/var/lib/docker/volumes/d09e682f4babe908ac445fcf6b37c85bd58fd3b64defc140edaec7fc6993e53f/_data", 
+       
+
+
 
