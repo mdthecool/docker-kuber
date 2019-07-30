@@ -109,7 +109,9 @@ docker container logs -f 09bdf43c0784
 
 
 
-### Volumes and mount management 
+### Volumes and mount management  
+
+ This can be used for externalize the configuraiton or importent files ectc, 
 
 Mounts will represents volumes on the docker container. 
 
