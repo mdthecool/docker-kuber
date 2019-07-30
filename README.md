@@ -62,5 +62,21 @@ But, in the docker httpd is root process. The process run on host system, the pr
 
 Docker client talks to docker using socker file created /var/docker 
 
+docker-container-shim is the process that represents the docker container in the host machine. 
+
+$ ps -aef | grep shim 
+root      1885  2431  0 06:23 ?        00:00:00 docker-containerd-shim 3680668f4fbe52426d9b7bdc700caaa6ec43ed6896da4e0e11f0d69904ad920a /var/run/docker/libcontainerd/3680668f4fbe52426d9b7bdc700caaa6ec43ed6896da4e0e11f0d69904ad920a docker-runc 
+
+docker-containerd  is the parent process to docker containers. 
+
+
+root      2431  2392  0 01:26 ?        00:00:16 docker-containerd -l unix:///var/run/docker/libcontainerd/docker-containerd.sock --metrics-interval=0 --start-timeout 2m --state-dir /var/run/docker/libcontainerd/containerd --shim docker-containerd-shim --runtime docker-runc
+
+dockerd is the parent process for docker-containerd . 
+
+#### dockerd --> docker-containerd --> docker-container-shim 
+
+Sduo process isolation because of the above structure. 
+
 ## 
 
