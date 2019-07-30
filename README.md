@@ -78,5 +78,35 @@ dockerd is the parent process for docker-containerd .
 
 Sduo process isolation because of the above structure. 
 
-## 
+
+##  Starting main process from the Docker file 
+
+CMD ["httpd", "-D", "FOREGROUND"] 
+
+Why we use it as array instead of httpd -D "FOREGROUND" it will be /bin/sh -c  httpd -D "FOREGROUND" which will be a shell command that gets exeucted ????
+
+openssl docker image, please check it might be useful. 
+
+## Managing configuration of service : 
+
+### Environment varialble 
+
+-e APACHE_PORT=8888 can be passed from outside when you run container. Also make sure you have scripts to handle that. 
+
+docker run -d  -e APACHE_PORT=8888 -p 9001:8888 app  
+
+docker image pull ghost:1-alpine
+
+docker image pull mysql:5.7 
+
+#### MYSQL_ROOT_PASSWORD  MYSQL_ALLOW_ENTRY_PASSWORD MYSQL_RANDOM_ROOT_PASSWORD  are the env that are required for mysql. 
+
+docker container run -d -e MYSQL_ROOT_PASSWORD=welcome1 mysql:5.7  
+
+Looking at container logs : 
+
+docker container logs -f 09bdf43c0784  
+
+
+
 
