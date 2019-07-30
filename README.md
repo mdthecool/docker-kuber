@@ -142,7 +142,7 @@ VOLUME /var/lib/mysql in Docker file
 
 Both above ones are good for backup but not for resume of the data. 
 
-#### 3. specify the namespace for the volume : example customerdb 
+#### 3. specify the namespace for the volume : example customerdb   (NAMED VOLUMES)
 
 docker container run -d -e MYSQL_ROOT_PASSWORD=welcome1  -v customerdb:/var/lib/mysql  mysql:5.7 
 
