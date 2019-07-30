@@ -29,3 +29,14 @@ This can be pushed to docker hub by explict command.
 Above command creates two tags :latest :1. 
 
 Alpine is production grade OS with less image size. 
+
+
+DOCKER COMMAND:  
+
+$ docker image ls app 
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+app                 2                   b37655234215        38 seconds ago      10.6MB
+app                 latest              b37655234215        38 seconds ago      10.6MB
+app                 1                   a332e4655d9f        23 minutes ago      10.6MB
+$ 
+
