@@ -13,7 +13,7 @@ RUN apk add apache2
 
 Build docker image : 
 
-## docker image build -t app:latest  -t app:1 .
+### docker image build -t app:latest  -t app:1 .
 
 docker images
 REPOSITORY                                    TAG                 IMAGE ID            CREATED             SIZE
@@ -40,6 +40,12 @@ app                 latest              b37655234215        38 seconds ago      
 app                 1                   a332e4655d9f        23 minutes ago      10.6MB
 $ 
 
- ## . represents the docker image build context where Dockerfile is present. 
+### . represents the docker image build context where Dockerfile is present. 
 
-##  The direcotry location is treated as docker context. Dockerfile should be with in the context. 
+### The direcotry location is treated as docker context. Dockerfile should be with in the context. 
+
+### dicker image prune   - Remove all dangling images 
+
+#### docker image build --no-cache to make sure clean building of image without cache usage
+
+#### Things are related and to optimze RUN command can be changed using ; or && 
