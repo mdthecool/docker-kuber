@@ -1,3 +1,4 @@
 FROM alpine
-RUN apk update
-RUN apk add apache2
+RUN apk update \
+    && apk add apache2
+COPY mypage.html /var/www/localhost/htdocs
