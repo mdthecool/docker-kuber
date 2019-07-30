@@ -131,12 +131,34 @@ Mounts will represents volumes on the docker container.
         ]
         
 
-#### docker run -d -v /var/log/apache2 app
-
+#### 1 docker run -d -v /var/log/apache2 app
+ 
 Below is the default mount location: 
 
-#### "/var/lib/docker/volumes/d09e682f4babe908ac445fcf6b37c85bd58fd3b64defc140edaec7fc6993e53f/_data", 
+"/var/lib/docker/volumes/d09e682f4babe908ac445fcf6b37c85bd58fd3b64defc140edaec7fc6993e53f/_data", 
        
+#### 2. mysql image by default defines volume for the DB data. 
+VOLUME /var/lib/mysql in Docker file 
 
+Both above ones are good for backup but not for resume of the data. 
+
+#### 3. specify the namespace for the volume : example customerdb 
+
+docker container run -d -e MYSQL_ROOT_PASSWORD=welcome1  -v customerdb:/var/lib/mysql  mysql:5.7 
+
+"Mounts": [
+            {
+                "Type": "volume",
+                "Name": "customerdb",
+                "Source": "/var/lib/docker/volumes/customerdb/_data",
+                "Destination": "/var/lib/mysql",
+                "Driver": "local",
+                "Mode": "z",
+                "RW": true,
+                "Propagation": ""
+            }
+        ]
+        
+#### "Source": "/var/lib/docker/volumes/customerdb/_data", known location to "Destination": "/var/lib/mysql",
 
 
