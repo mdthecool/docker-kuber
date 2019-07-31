@@ -372,10 +372,48 @@ round-trip min/avg/max = 0.070/0.095/0.120 ms
 $  
 
 
+## Docker Blog setup using networking 
+
+1. network
+docker network create blog-nw
+
+1. db
+docker container run -d --name blog-db --network blog-nw -v /tmp/blog:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=welcome mysql:5.7 
+
+2. ghost
+docker container run -d --name blog-ghost --network blog-nw -p 9090:2368 -e database__client=mysql -e database__connection__host=blog-db -e database__connection__port=3306 -e database__connection__user=root -e database__connection__password=welcome -e database__connection__database=ghost ghost:1-alpine
 
 
-docker container run -d --name blog-host --network blog-nw -p 9090:2368 -e database_client=mysql -e database_connect_host=blog-db -e database_connection_port=3306 -e datrabase_connection_user=root -e database_connection_password=welcome1 -e database_connection_database=ghost ghost:1-alpine 
 
 
 
+#### $ docker exec -it blog-db mysql -uroot -pwelcome
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 35
+Server version: 5.7.27 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show all;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'all' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| ghost              |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.01 sec)
+
+mysql> 
 
