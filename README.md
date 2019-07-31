@@ -497,9 +497,44 @@ YAML: - array space to represents data
 
  
 
-kubectl version 
+##### kubectl version 
+
+
+smd-mac:.kube smd$ kubectl version 
+Client Version: version.Info{Major:"1", Minor:"10", GitVersion:"v1.10.11", GitCommit:"637c7e288581ee40ab4ca210618a89a555b6e7e9", GitTreeState:"clean", BuildDate:"2018-11-26T14:38:32Z", GoVersion:"go1.9.3", Compiler:"gc", Platform:"darwin/amd64"}
+Server Version: version.Info{Major:"", Minor:"", GitVersion:"v1.9.0", GitCommit:"925c127ec6b946659ad0fd596fa959be43f0cc05", GitTreeState:"clean", BuildDate:"2018-01-26T19:04:38Z", GoVersion:"go1.9.1", Compiler:"gc", Platform:"linux/amd64"}
+smd-mac:.kube smd$ 
+
 
 kubectl commandline tool for the orchestration needs. 
+
+#### k8 configureation is present .kube/config 
+
+Context is single k8 master representation. 
+
+#### smd-mac:.kube smd$ cat ~/.kube/config 
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /Users/smd/.minikube/ca.crt
+    server: https://192.168.99.101:8443
+  name: minikube
+contexts:
+- context:
+    cluster: minikube
+    user: minikube
+  name: minikube
+current-context: minikube
+kind: Config
+preferences: {}
+users:
+- name: minikube
+  user:
+    as-user-extra: {}
+    client-certificate: /Users/smd/.minikube/client.crt
+    client-key: /Users/smd/.minikube/client.key
+smd-mac:.kube smd$ 
+
 
 
 
