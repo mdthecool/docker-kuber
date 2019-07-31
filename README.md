@@ -628,6 +628,8 @@ If POD container dies all the containers of POD will die. K8 will start the POD 
 
 While doing horizantal scalaing should be done at POD level. 
 
+pod is unit of scaling. 
+
 
 
 
