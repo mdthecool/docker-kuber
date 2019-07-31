@@ -702,3 +702,40 @@ helloworld-controller-hp59c   1/1       Running   0          14m
 smd-mac:ora-jul29-dock-kube smd$ 
 
 
+No way to drain out and scale down, window or low traffic time is the onlyway .
+
+
+Using configuration file also we can scale up: 
+
+relica:3 
+
+
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: helloworld-controller
+spec:
+  replicas: 3
+  selector:
+    app: helloworld
+  template:
+    metadata:
+      labels:
+        app: helloworld
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - name: nginxport
+          containerPort: 80
+          
+          
+##### smd-mac:ora-jul29-dock-kube smd$  kubectl apply -f k8s/rc/rc-helloworld.yml 
+replicationcontroller "helloworld-controller" configured
+smd-mac:ora-jul29-dock-kube smd$ kubectl get pods 
+NAME                          READY     STATUS    RESTARTS   AGE
+helloworld-controller-btgrm   1/1       Running   0          20m
+helloworld-controller-d4r9q   1/1       Running   0          34s
+helloworld-controller-hp59c   1/1       Running   0          20m
+smd-mac:ora-jul29-dock-kube smd$ 
