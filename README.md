@@ -417,3 +417,78 @@ mysql> show databases;
 
 mysql> 
 
+
+
+
+## Docker shortcomings 
+
+1. N/w 
+    1. ip clash 
+    2. No node awareness 
+ 2. Better container managmement aacorss nodes (dockerd agent)
+ 
+ 3. Application scalaing 
+ 
+ 4. Load balacing 
+ 
+ We need a tool manage multiple dockerds running on different VM / hosts 
+ 
+ 5. Better volume management independent of VM/ hosts -
+ 
+ 
+ ### Solutions: Docker-swarm : From docker opensource
+ 
+ $ docker info
+Containers: 15
+ Running: 15
+ Paused: 0
+ Stopped: 0
+Images: 25
+Server Version: 17.09.0-ce
+Storage Driver: overlay2
+ Backing Filesystem: extfs
+ Supports d_type: true
+ Native Overlay Diff: true
+Logging Driver: json-file
+Cgroup Driver: cgroupfs
+Plugins:
+ Volume: local
+ Network: bridge host macvlan null overlay
+ Log: awslogs fluentd gcplogs gelf journald json-file logentries splunk syslog
+####Swarm: inactive
+Runtimes: runc
+Default Runtime: runc
+Init Binary: docker-init
+containerd version: 06b9cb35161009dcb7123345749fef02f7cea8e0
+runc version: 3f2f8b84a77f73d38244dd690525642a72156c64
+init version: N/A (expected: )
+Security Options:
+ seccomp
+  Profile: default
+Kernel Version: 4.9.64
+Operating System: Buildroot 2017.11
+OSType: linux
+Architecture: x86_64
+CPUs: 2
+Total Memory: 1.953GiB
+Name: minikube
+ID: B2GG:OGQH:MSMT:QFQJ:RHD2:5U2G:VTKH:V5EB:CJKS:SRBX:VXBW:EO6E
+Docker Root Dir: /var/lib/docker
+Debug Mode (client): false
+Debug Mode (server): false
+Username: mdthecool1
+Registry: https://index.docker.io/v1/
+Labels:
+ provider=virtualbox
+Experimental: false
+Insecure Registries:
+ 10.96.0.0/12
+ 127.0.0.0/8
+Live Restore Enabled: false
+
+$ 
+
+ 
+
+
+
