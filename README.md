@@ -1,6 +1,8 @@
 # docker-kuber
 
 
+Docker Open container spec implementation of linux core cotainers which is very poplular. Cloudfoundry , Rocket (RHEL) . 
+
 Apk update 
 Apk add apache2 
 
