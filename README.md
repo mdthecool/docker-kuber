@@ -774,4 +774,25 @@ pod4 app:2 . -- >
 Undo of upgrades --> 
 
 
+#### Replication Set: 
+
+Deployment --> RC1 / RS1  
+
+We can define the thresholds while doing upgrades dep1 max down :1 
+
+While upgrading 
+
+RC1 --> RC2 ( Replication Set ). 
+
+
+
+Most common way of deploying services in K8 is deployments 
+
+-Rolling upgrade 
+-Downgrade 
+-Thresholds while upgrading 
+-
+
+
+
 
