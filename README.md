@@ -631,6 +631,7 @@ While doing horizantal scalaing should be done at POD level.
 pod is unit of scaling. 
 
 ###### delete POD 
+```
 smd-mac:ora-jul29-dock-kube smd$ kubectl delete pod my-nginx 
 pod "my-nginx" deleted
 smd-mac:ora-jul29-dock-kube smd$
@@ -671,7 +672,7 @@ spec:
         ports:
         - name: nginxport
           containerPort: 80
-
+```
 #### kubctl scale replicas is very simple --relicas 5 with rc. 
 
 
@@ -690,7 +691,7 @@ smd-mac:ora-jul29-dock-kube smd$
 
 
 #### SCALE DOWN 
-
+```
 smd-mac:ora-jul29-dock-kube smd$ kubectl scale rc helloworld-controller --replicas  2 
 replicationcontroller "helloworld-controller" scaled
 smd-mac:ora-jul29-dock-kube smd$ 
@@ -700,7 +701,7 @@ NAME                          READY     STATUS    RESTARTS   AGE
 helloworld-controller-btgrm   1/1       Running   0          14m
 helloworld-controller-hp59c   1/1       Running   0          14m
 smd-mac:ora-jul29-dock-kube smd$ 
-
+```
 
 No way to drain out and scale down, window or low traffic time is the onlyway .
 
@@ -730,7 +731,8 @@ spec:
         - name: nginxport
           containerPort: 80
 ````
-          
+
+```
 ##### smd-mac:ora-jul29-dock-kube smd$  kubectl apply -f k8s/rc/rc-helloworld.yml 
 replicationcontroller "helloworld-controller" configured
 smd-mac:ora-jul29-dock-kube smd$ kubectl get pods 
@@ -740,6 +742,8 @@ helloworld-controller-d4r9q   1/1       Running   0          34s
 helloworld-controller-hp59c   1/1       Running   0          20m
 smd-mac:ora-jul29-dock-kube smd$ 
 
+```
+
 #### app: helloworld will define the name of the lable for the POD. Even if you run as POD or RC.  
 
 kubctl delete rc helloworld-controller 
@@ -748,6 +752,24 @@ will delete with the containers created part of POD or RC.
 Naming convention and unique names are required in K8. 
 
 ##### WINDOWS linux terminal . cmder 
+
+
+### Deployment 
+
+pod1 app:1
+pod2 app:1
+pod3 app:1
+
+
+Rolling upgrades: 
+
+
+pod1 app:1 --X
+pod2 app:1
+pod3 app:1
+pod4 app:2 . -- > 
+
+Undo of upgrades --> 
 
 
 
