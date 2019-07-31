@@ -685,3 +685,20 @@ helloworld-controller-hp59c   1/1       Running   0          12m
 helloworld-controller-hq5j5   1/1       Running   0          39s
 helloworld-controller-l45jm   1/1       Running   0          39s
 smd-mac:ora-jul29-dock-kube smd$ 
+
+
+
+
+#### SCALE DOWN 
+
+smd-mac:ora-jul29-dock-kube smd$ kubectl scale rc helloworld-controller --replicas  2 
+replicationcontroller "helloworld-controller" scaled
+smd-mac:ora-jul29-dock-kube smd$ 
+
+smd-mac:ora-jul29-dock-kube smd$ kubectl get pods 
+NAME                          READY     STATUS    RESTARTS   AGE
+helloworld-controller-btgrm   1/1       Running   0          14m
+helloworld-controller-hp59c   1/1       Running   0          14m
+smd-mac:ora-jul29-dock-kube smd$ 
+
+
