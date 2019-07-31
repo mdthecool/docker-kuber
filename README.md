@@ -374,6 +374,8 @@ $
 
 
 
+docker container run -d --name blog-host --network blog-nw -p 9090:2368 -e database_client=mysql -e database_connect_host=blog-db -e database_connection_port=3306 -e datrabase_connection_user=root -e database_connection_password=welcome1 -e database_connection_database=ghost ghost:1-alpine 
+
 
 
 
