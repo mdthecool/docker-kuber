@@ -495,6 +495,15 @@ $
 
 YAML: - array space to represents data 
 
+
+
+
+#### AGENDA
+
+1. Single cluster node = terminologies of K8S 
+2. communication 
+3. Archi K8S 
+4. Multinode cluster 
  
 
 ##### kubectl version 
@@ -535,11 +544,81 @@ users:
     client-key: /Users/smd/.minikube/client.key
 smd-mac:.kube smd$ 
 
+#### POD Creation 
+
+smd-mac:ora-jul29-dock-kube smd$ kubectl apply -f k8s/pod/pod-helloworld.yml  
+pod "my-nginx" created
+
+
+#### smd-mac:ora-jul29-dock-kube smd$ kubectl describe pod my-nginx 
+Name:         my-nginx
+Namespace:    default
+Node:         minikube/192.168.99.101
+Start Time:   Wed, 31 Jul 2019 14:33:43 +0530
+Labels:       app=helloworld
+Annotations:  kubectl.kubernetes.io/last-applied-configuration={"apiVersion":"v1","kind":"Pod","metadata":{"annotations":{},"labels":{"app":"helloworld"},"name":"my-nginx","namespace":"default"},"spec":{"containers...
+Status:       Running
+IP:           172.17.0.4
+Containers:
+  web:
+    Container ID:   docker://d41045a8158d2981bc07ba53ef221f5be42f18ca5d23c630b713a69f60f65b5a
+    Image:          nginx:alpine
+    Image ID:       docker-pullable://nginx@sha256:482ead44b2203fa32b3390abdaf97cbdc8ad15c07fb03a3e68d7c35a19ad7595
+    Port:           80/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Wed, 31 Jul 2019 14:33:50 +0530
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-k7zt6 (ro)
+Conditions:
+  Type           Status
+  Initialized    True 
+  Ready          True 
+  PodScheduled   True 
+Volumes:
+  default-token-k7zt6:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-k7zt6
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     <none>
+Events:
+  Type    Reason                 Age   From               Message
+  ----    ------                 ----  ----               -------
+  Normal  Scheduled              9m    default-scheduler  Successfully assigned my-nginx to minikube
+  Normal  SuccessfulMountVolume  9m    kubelet, minikube  MountVolume.SetUp succeeded for volume "default-token-k7zt6"
+  Normal  Pulling                9m    kubelet, minikube  pulling image "nginx:alpine"
+  Normal  Pulled                 9m    kubelet, minikube  Successfully pulled image "nginx:alpine"
+  Normal  Created                9m    kubelet, minikube  Created container
+  Normal  Started                9m    kubelet, minikube  Started container
+smd-mac:ora-jul29-dock-kube smd$ 
+
+
+#### This reflects in the minikube - POD NAME is part of the docker container: 
+$ docker ps -a
+CONTAINER ID        IMAGE                                         COMMAND                  CREATED             STATUS                        PORTS               NAMES
+d41045a8158d        nginx                                         "nginx -g 'daemon ..."   4 minutes ago       Up 4 minutes                                      k8s_web_my-nginx_default_188a8e9c-b372-11e9-809f-08002788c05b_0
 
 
 
+name of the container is web , pod name is my-nginx 
 
 
+#### The POD also a container is a demon for the POD which manages all the containers related to POD 
+
+359c01ff2b49        gcr.io/google_containers/pause-amd64:3.0      "/pause"                 4 minutes ago       Up 4 minutes                                      k8s_POD_my-nginx_default_188a8e9c-b372-11e9-809f-08002788c05b_0
+
+
+Docker container nginx does not get IP. 
+## Networking prespective POD network is parent networks. 
+ - load balancing 
+
+
+VETH - Virtual Ethernet Adaptors - Similar to that POD starts VIP 
 
 
 
