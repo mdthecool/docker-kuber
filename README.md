@@ -357,4 +357,22 @@ $
 
 
 
+### DNS Name Resolution Automatically happens by the name of the container. Docker by default has embedded nameserver.  
+
+
+$ docker container exec w2 ping -c2 db         
+PING db (172.19.0.3): 56 data bytes
+64 bytes from 172.19.0.3: seq=0 ttl=64 time=0.070 ms
+64 bytes from 172.19.0.3: seq=1 ttl=64 time=0.120 ms
+
+--- db ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 0.070/0.095/0.120 ms
+$  
+
+
+
+
+
+
 
