@@ -181,3 +181,12 @@ docker run -d -v /tmp/logs /var/log/apache2 app
         ],
         
         binds 
+        
+        
+        
+### Docker Networking 
+
+Bridge , host and none - default network adaptors 
+
+
+
