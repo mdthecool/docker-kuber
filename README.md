@@ -28,6 +28,7 @@ This can be pushed to docker hub by explict command.
 
 Above command creates two tags :latest :1. 
 
+
 Alpine is production grade OS with less image size. 
 
 
