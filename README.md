@@ -614,11 +614,15 @@ name of the container is web , pod name is my-nginx
 
 
 Docker container nginx does not get IP. 
-## Networking prespective POD network is parent networks. 
+## Networking prespective POD network is parent network for the all the containers of the POD (example NGINX, MYSQL etc.. ) useful for following reasons 
+
  - load balancing 
+ - management of the communication with in POD management 
 
 
-VETH - Virtual Ethernet Adaptors - Similar to that POD starts VIP 
+VETH - Virtual Ethernet Adaptors - Similar to that POD starts VIP
+
+If POD container dies all the containers of POD will die. K8 will start the POD container as well as all needed containers as well. 
 
 
 
