@@ -748,4 +748,7 @@ will delete with the containers created part of POD or RC.
 
 Naming convention and unique names are required in K8. 
 
+##### WINDOWS linux terminal . cmder 
+
+
 
