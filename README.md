@@ -490,10 +490,21 @@ Live Restore Enabled: false
 
 $ 
 
+# KUBE 
+
 
 YAML: - array space to represents data 
 
  
+
+kubectl version 
+
+kubectl commandline tool for the orchestration needs. 
+
+
+
+
+
 
 
 
