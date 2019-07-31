@@ -283,7 +283,52 @@ $ docker container inspect db | grep -i ipaddress
 $ 
 
 
+$ docker network create w2-db-net 
+c1b8d7e9d858a31ccd7018199490b58646666fd11b94db6054dc1fab7ec739f8
+$ docker network inspect w2-db-net  
+[
+    {
+        "Name": "w2-db-net",
+        "Id": "c1b8d7e9d858a31ccd7018199490b58646666fd11b94db6054dc1fab7ec739f8",
+        "Created": "2019-07-31T04:46:25.792086809Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "172.19.0.0/16",
+                    "Gateway": "172.19.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {},
+        "Options": {},
+        "Labels": {}
+    }
+]
+$ 
 
+
+
+$ docker network disconnect bridge w2
+$ docker network connect w2-db-net w2
+$ docker network connect w2-db-net db 
+$ docker container inspect db | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "172.18.0.3",
+                    "IPAddress": "172.19.0.3",
+$ 
 
 
 
