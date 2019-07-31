@@ -709,7 +709,7 @@ Using configuration file also we can scale up:
 
 relica:3 
 
-'''
+```
 apiVersion: v1
 kind: ReplicationController
 metadata:
@@ -729,7 +729,7 @@ spec:
         ports:
         - name: nginxport
           containerPort: 80
-          
+````
           
 ##### smd-mac:ora-jul29-dock-kube smd$  kubectl apply -f k8s/rc/rc-helloworld.yml 
 replicationcontroller "helloworld-controller" configured
@@ -740,7 +740,6 @@ helloworld-controller-d4r9q   1/1       Running   0          34s
 helloworld-controller-hp59c   1/1       Running   0          20m
 smd-mac:ora-jul29-dock-kube smd$ 
 
-''' 
 #### app: helloworld will define the name of the lable for the POD. Even if you run as POD or RC.  
 
 kubctl delete rc helloworld-controller 
