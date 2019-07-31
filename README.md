@@ -624,5 +624,10 @@ VETH - Virtual Ethernet Adaptors - Similar to that POD starts VIP
 
 If POD container dies all the containers of POD will die. K8 will start the POD container as well as all needed containers as well. 
 
+# Smallest management entity in K8 is POD
+
+While doing horizantal scalaing should be done at POD level. 
+
+
 
 
