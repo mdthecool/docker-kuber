@@ -332,5 +332,29 @@ $
 
 
 
+$ docker container inspect db | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "172.18.0.3",
+                    "IPAddress": "172.19.0.3",
+$ docker container inspect db | grep -i ipaddress 
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "172.18.0.3",
+                    "IPAddress": "172.19.0.3",
+$ docker container exec w2 pint -c2 172.19.0.3 
+oci runtime error: exec failed: container_linux.go:265: starting container process caused "exec: \"pint\": executable file not found in $PATH"
+
+$ docker container exec w2 ping -c2 172.19.0.3 
+PING 172.19.0.3 (172.19.0.3): 56 data bytes
+64 bytes from 172.19.0.3: seq=0 ttl=64 time=0.109 ms
+64 bytes from 172.19.0.3: seq=1 ttl=64 time=0.075 ms
+
+--- 172.19.0.3 ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 0.075/0.092/0.109 ms
+$ 
+
+
 
 
