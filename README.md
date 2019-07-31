@@ -438,7 +438,7 @@ mysql>
  5. Better volume management independent of VM/ hosts -
  
  
- ### Solutions: Docker-swarm : From docker opensource
+ ##### Solutions: Docker-swarm : From docker opensource
  
  $ docker info
 Containers: 15
@@ -457,7 +457,7 @@ Plugins:
  Volume: local
  Network: bridge host macvlan null overlay
  Log: awslogs fluentd gcplogs gelf journald json-file logentries splunk syslog
-####Swarm: inactive
+#### Swarm: inactive
 Runtimes: runc
 Default Runtime: runc
 Init Binary: docker-init
