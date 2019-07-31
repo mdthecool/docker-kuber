@@ -188,5 +188,104 @@ docker run -d -v /tmp/logs /var/log/apache2 app
 
 Bridge , host and none - default network adaptors 
 
+$ docker network ls 
+NETWORK ID          NAME                DRIVER              SCOPE
+278d706287e2        bridge              bridge              local
+0999ce21d6ab        host                host                local
+0559eb5c0b49        none                null                local
+$  
+
+
+
+docker network inspect bridge
+
+$ docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+278d706287e2        bridge              bridge              local
+0999ce21d6ab        host                host                local
+0559eb5c0b49        none                null                local
+095b8f49d407        w1-dn-net           bridge              local
+$ 
+
+
+
+$ docker network inspect w1-dn-net  
+[
+    {
+        "Name": "w1-dn-net",
+        "Id": "095b8f49d4077b8526f0fc4eb872dbec5a6b36aad1903e2300d6357f205faf10",
+        "Created": "2019-07-31T04:36:45.007625227Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "172.18.0.0/16",
+                    "Gateway": "172.18.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {},
+        "Options": {},
+        "Labels": {}
+    }
+]
+$ 
+
+
+### Remove w1 and db from default bridge network and move to newly created w1-dn-net. 
+
+docker network connect w1-dn-net w1 
+
+
+$ docker container inspect w1 | grep -i ipaddress 
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.4",
+                    "IPAddress": "172.18.0.2",
+$ 
+
+"Gateway": "172.18.0.1"    -      "IPAddress": "172.18.0.2", 
+
+Now gateway 172.18.0 - can connect to IPAddress 172.18.0.2
+
+
+
+$ docker container inspect db | grep -i ipaddress 
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.6",
+                    "IPAddress": "172.17.0.6",
+$  
+
+
+Moving DB docker from bridge to  w1-dn-net  
+
+$ docker network disconnect bridge db 
+$ docker container inspect db | grep -i ipaddress 
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+$ 
+
+$ docker network connect w1-dn-net  db 
+$ docker container inspect db | grep -i ipaddress 
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "172.18.0.3",
+$ 
+
+
+
+
+
+
 
 
