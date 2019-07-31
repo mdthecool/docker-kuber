@@ -739,3 +739,13 @@ helloworld-controller-btgrm   1/1       Running   0          20m
 helloworld-controller-d4r9q   1/1       Running   0          34s
 helloworld-controller-hp59c   1/1       Running   0          20m
 smd-mac:ora-jul29-dock-kube smd$ 
+
+
+#### app: helloworld will define the name of the lable for the POD. Even if you run as POD or RC. 
+
+kubctl delete rc helloworld-controller 
+will delete with the containers created part of POD or RC. 
+
+Naming convention and unique names are required in K8. 
+
+
