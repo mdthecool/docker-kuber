@@ -630,6 +630,58 @@ While doing horizantal scalaing should be done at POD level.
 
 pod is unit of scaling. 
 
+###### delete POD 
+smd-mac:ora-jul29-dock-kube smd$ kubectl delete pod my-nginx 
+pod "my-nginx" deleted
+smd-mac:ora-jul29-dock-kube smd$
+
+#####  replicas: 2 - with template is way to replicate a pod
 
 
+smd-mac:ora-jul29-dock-kube smd$  kubectl apply -f k8s/rc/rc-helloworld.yml 
+replicationcontroller "helloworld-controller" created
+smd-mac:ora-jul29-dock-kube smd$ 
 
+Two containers spun 
+
+$ docker ps -a
+CONTAINER ID        IMAGE                                         COMMAND                  CREATED             STATUS                     PORTS               NAMES
+8be129ccd7a9        nginx                                         "nginx -g 'daemon ..."   6 minutes ago       Up 6 minutes                                   k8s_nginx_helloworld-controller-hp59c_default_58dab4e4-b37e-11e9-809f-08002788c05b_0
+8ee137a7d8cc        nginx                                         "nginx -g 'daemon ..."   6 minutes ago       Up 6 minutes                                   k8s_nginx_helloworld-controller-btgrm_default_58da3fa7-b37e-11e9-809f-08002788c05b_0
+
+
+###### Replication of containers : 
+smd-mac:ora-jul29-dock-kube smd$ cat   k8s/rc/rc-helloworld.yml 
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: helloworld-controller
+spec:
+  replicas: 2
+  selector:
+    app: helloworld
+  template:
+    metadata:
+      labels:
+        app: helloworld
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - name: nginxport
+          containerPort: 80
+
+#### kubctl scale replicas is very simple --relicas 5 with rc. 
+
+
+smd$ kubectl scale rc helloworld-controller --replicas  5 
+replicationcontroller "helloworld-controller" scaled
+smd-mac:ora-jul29-dock-kube smd$ kubectl get pods 
+NAME                          READY     STATUS    RESTARTS   AGE
+helloworld-controller-btgrm   1/1       Running   0          12m
+helloworld-controller-f24jf   1/1       Running   0          39s
+helloworld-controller-hp59c   1/1       Running   0          12m
+helloworld-controller-hq5j5   1/1       Running   0          39s
+helloworld-controller-l45jm   1/1       Running   0          39s
+smd-mac:ora-jul29-dock-kube smd$ 
