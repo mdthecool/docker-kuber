@@ -903,11 +903,13 @@ smd-mac:ora-jul29-dock-kube smd$
 
 ```
 
+We can do the same using deploy configuration 
 
-#### 
+```
 
+spec:
+  revisionHistoryLimit: 10
+  replicas: 10
 
-
-
-
+```
 
