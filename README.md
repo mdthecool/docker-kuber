@@ -1138,7 +1138,15 @@ smd-mac:ora-jul29-dock-kube smd$ kubectl logs -f helloworld-dep-6b5cd64d8d-4j2s4
 ```
 
 
+
 smd-mac:ora-jul29-dock-kube smd$ kubectl logs -f helloworld-dep-6b5cd64d8d-4j2s4
+
+##### if you hit log of requests using following command: 
+
+smd-mac:ora-jul29-dock-kube smd$ while true; do curl http://192.168.99.101:31001/; done  
+
+You can see logs flowing in both the POD's. 
+
 
 
 
