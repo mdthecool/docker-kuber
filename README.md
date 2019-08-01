@@ -852,3 +852,62 @@ helloworld-dep-6b5cd64d8d   1         1         1         1m
 smd-mac:ora-jul29-dock-kube smd$ 
 
 ```
+
+##### Scaling command of Deployemnt:
+
+```
+
+smd-mac:ora-jul29-dock-kube smd$ kubectl scale deploy helloworld-dep --replicas 10
+deployment.extensions "helloworld-dep" scaled
+smd-mac:ora-jul29-dock-kube smd$ kubectl get pods
+NAME                              READY     STATUS              RESTARTS   AGE
+helloworld-dep-6b5cd64d8d-5jf42   0/1       ContainerCreating   0          10s
+helloworld-dep-6b5cd64d8d-7dxdf   1/1       Running             0          10s
+helloworld-dep-6b5cd64d8d-kgbhd   1/1       Running             0          10s
+helloworld-dep-6b5cd64d8d-kggv8   1/1       Running             0          7m
+helloworld-dep-6b5cd64d8d-n7bbs   1/1       Running             0          10s
+helloworld-dep-6b5cd64d8d-nr25b   1/1       Running             0          10s
+helloworld-dep-6b5cd64d8d-svs8x   1/1       Running             0          10s
+helloworld-dep-6b5cd64d8d-w2cdz   1/1       Running             0          10s
+helloworld-dep-6b5cd64d8d-w9p6x   0/1       ContainerCreating   0          10s
+helloworld-dep-6b5cd64d8d-wxjk6   1/1       Running             0          10s
+smd-mac:ora-jul29-dock-kube smd$ 
+
+```
+
+#### k8 maintains history of the deployment 
+
+```
+smd-mac:ora-jul29-dock-kube smd$ kubectl rollout history deploy helloworld-dep 
+deployments "helloworld-dep"
+REVISION  CHANGE-CAUSE
+1         <none>
+
+smd-mac:ora-jul29-dock-kube smd$ 
+
+smd-mac:ora-jul29-dock-kube smd$ kubectl rollout history deploy helloworld-dep --revision 1 
+deployments "helloworld-dep" with revision #1
+Pod Template:
+  Labels:	app=helloworld
+	pod-template-hash=2617820848
+  Containers:
+   web:
+    Image:	nginx:mainline
+    Port:	80/TCP
+    Host Port:	0/TCP
+    Environment:	<none>
+    Mounts:	<none>
+  Volumes:	<none>
+
+smd-mac:ora-jul29-dock-kube smd$ 
+
+```
+
+
+#### 
+
+
+
+
+
+
