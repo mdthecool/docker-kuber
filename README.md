@@ -1184,5 +1184,9 @@ nameserver 10.96.0.10
 
 
 
+![alt text](https://github.com/mdthecool/docker-kuber/blob/master/app/i1.png)
+
+
+
 
 
