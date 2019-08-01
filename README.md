@@ -1086,6 +1086,59 @@ smd-mac:ora-jul29-dock-kube smd$
 
 minicubeip:31001 will serve the nginx 
 
+#### SCALE AND DEPLOY #### 
+
+``` 
+
+smd-mac:ora-jul29-dock-kube smd$ kubectl scale deploy helloworld-dep --replicas 2
+deployment.extensions "helloworld-dep" scaled
+smd-mac:ora-jul29-dock-kube smd$ kubectl get pods 
+NAME                              READY     STATUS    RESTARTS   AGE
+helloworld-dep-6b5cd64d8d-4j2s4   1/1       Running   0          1h
+helloworld-dep-6b5cd64d8d-hpsjj   1/1       Running   0          21s
+smd-mac:ora-jul29-dock-kube smd$ 
+
+
+smd-mac:ora-jul29-dock-kube smd$ kubectl describe service hw-svc 
+Name:                     hw-svc
+Namespace:                default
+Labels:                   <none>
+Annotations:              kubectl.kubernetes.io/last-applied-configuration={"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"hw-svc","namespace":"default"},"spec":{"ports":[{"nodePort":31001,"port":8888,...
+Selector:                 app=helloworld
+Type:                     NodePort
+IP:                       10.104.58.204
+Port:                     <unset>  8888/TCP
+TargetPort:               nginxport/TCP
+NodePort:                 <unset>  31001/TCP
+Endpoints:                172.17.0.4:80,172.17.0.5:80
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+smd-mac:ora-jul29-dock-kube smd$ 
+``` 
+
+SERVICE IP .:  service PORT : 
+
+
+IP:                       10.104.58.204
+Port:                     <unset>  8888/TCP
+	
+NODE PORT : NodePort:                 <unset>  31001/TCP 
+	
+
+
+* Looking at the logs of the POD 
+```
+
+smd-mac:ora-jul29-dock-kube smd$ kubectl logs -f helloworld-dep-6b5cd64d8d-4j2s4  
+172.17.0.1 - - [01/Aug/2019:06:10:22 +0000] "GET / HTTP/1.1" 200 612 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36" "-"
+2019/08/01 06:10:22 [error] 5#5: *1 open() "/usr/share/nginx/html/favicon.ico" failed (2: No such file or directory), client: 172.17.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "192.168.99.101:31001", referrer: "http://192.168.99.101:31001/"
+172.17.0.1 - - [01/Aug/2019:06:10:22 +0000] "GET /favicon.ico HTTP/1.1" 404 555 "http://192.168.99.101:31001/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36" "-"
+
+```
+
+
+smd-mac:ora-jul29-dock-kube smd$ kubectl logs -f helloworld-dep-6b5cd64d8d-4j2s4
 
 
 
