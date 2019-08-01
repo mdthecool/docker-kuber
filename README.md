@@ -1164,5 +1164,25 @@ nameserver 10.96.0.10
 
 
 
+##### Controllor service 
+
+##### Scheculer 
+
+##### ECTD - DB
+
+
+
+#####  [[ KUBE-PROXY   --> canal (mesh network components) ]]--> CREATES A SUBNET FOR A POD - 172.17.0.0 / 172.18.0.0 /172.18.0.0  -- to make sure there are no clash of IP Addresses 
+
+##### MESHNETWORK .  ---> calico , flannel(oracle), cloud weave(google), overlay (Docker-swarm) - Networking solution between the K8 Nodes  - Clustering 
+
+
+
+#### INFLIGHT SNAGGING #### 
+
+
+
+
+
 
 
