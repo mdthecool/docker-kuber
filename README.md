@@ -912,4 +912,112 @@ spec:
   replicas: 10
 
 ```
+#### Rolling upgrade of the do deployments with new image - for the image 
+
+``` 
+kubectl set image deploy helloworld-dep web=nginx:alpine
+
+smd-mac:ora-jul29-dock-kube smd$ kubectl set image deploy helloworld-dep web=nginx:alpine 
+deployment.apps "helloworld-dep" image updated
+smd-mac:ora-jul29-dock-kube smd$ kubectl get rs 
+NAME                        DESIRED   CURRENT   READY     AGE
+helloworld-dep-5cdb68cc76   5         5         3         8s
+helloworld-dep-6b5cd64d8d   6         6         6         27m
+smd-mac:ora-jul29-dock-kube smd$ kubectl get rs 
+NAME                        DESIRED   CURRENT   READY     AGE
+helloworld-dep-5cdb68cc76   6         6         4         10s
+helloworld-dep-6b5cd64d8d   5         5         5         27m
+smd-mac:ora-jul29-dock-kube smd$ kubectl get rs 
+NAME                        DESIRED   CURRENT   READY     AGE
+helloworld-dep-5cdb68cc76   6         6         4         11s
+helloworld-dep-6b5cd64d8d   5         5         5         27m
+smd-mac:ora-jul29-dock-kube smd$ kubectl get rs 
+NAME                        DESIRED   CURRENT   READY     AGE
+helloworld-dep-5cdb68cc76   7         7         5         13s
+helloworld-dep-6b5cd64d8d   4         4         4         27m
+smd-mac:ora-jul29-dock-kube smd$ kubectl get rs 
+NAME                        DESIRED   CURRENT   READY     AGE
+helloworld-dep-5cdb68cc76   8         8         6         15s
+helloworld-dep-6b5cd64d8d   3         3         3         27m
+smd-mac:ora-jul29-dock-kube smd$ kubectl get rs 
+NAME                        DESIRED   CURRENT   READY     AGE
+helloworld-dep-5cdb68cc76   10        10        8         25s
+helloworld-dep-6b5cd64d8d   1         1         1         27m
+smd-mac:ora-jul29-dock-kube smd$ 
+
+
+
+``` 
+
+
+We can undo  image to mainline nginx image can also be done nby executiong the command 
+
+
+```
+
+smd-mac:ora-jul29-dock-kube smd$ kubectl rollout status deploy helloworld-dep 
+deployment "helloworld-dep" successfully rolled out
+smd-mac:ora-jul29-dock-kube smd$
+
+smd-mac:ora-jul29-dock-kube smd$ kubectl rollout history deploy helloworld-dep --revision 1
+deployments "helloworld-dep" with revision #1
+Pod Template:
+  Labels:	app=helloworld
+	pod-template-hash=2617820848
+  Containers:
+   web:
+    Image:	nginx:mainline
+    Port:	80/TCP
+    Host Port:	0/TCP
+    Environment:	<none>
+    Mounts:	<none>
+  Volumes:	<none>
+
+
+
+smd-mac:ora-jul29-dock-kube smd$ kubectl rollout undo deploy helloworld-dep --to-revision 1 
+deployment.apps "helloworld-dep" 
+smd-mac:ora-jul29-dock-kube smd$ kubectl rollout status deploy helloworld-dep 
+Waiting for rollout to finish: 4 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 4 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 4 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 5 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 5 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 5 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 5 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 5 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 6 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 6 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 6 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 7 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 7 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 7 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 8 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 8 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 8 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 8 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 9 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 9 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 9 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 9 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 9 out of 10 new replicas have been updated...
+Waiting for rollout to finish: 1 old replicas are pending termination...
+Waiting for rollout to finish: 1 old replicas are pending termination...
+Waiting for rollout to finish: 1 old replicas are pending termination...
+Waiting for rollout to finish: 9 of 10 updated replicas are available...
+deployment "helloworld-dep" successfully rolled out
+smd-mac:ora-jul29-dock-kube smd$ 
+
+smd-mac:ora-jul29-dock-kube smd$ kubectl get rs 
+NAME                        DESIRED   CURRENT   READY     AGE
+helloworld-dep-5cdb68cc76   0         0         0         13m
+helloworld-dep-6b5cd64d8d   10        10        10        40m
+smd-mac:ora-jul29-dock-kube smd$ 
+
+
+``` 
+
+
+
+
 
