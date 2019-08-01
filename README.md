@@ -788,11 +788,59 @@ RC1 --> RC2 ( Replication Set ).
 
 Most common way of deploying services in K8 is deployments 
 
--Rolling upgrade 
--Downgrade 
--Thresholds while upgrading 
+- Rolling upgrade 
+- Downgrade 
+- Thresholds while upgrading 
 -
 
 
+spec defines how each componenet of deployment should behave. 
+
+
+```
+
+
+smd-mac:ora-jul29-dock-kube smd$ kubectl apply -f k8s/dep/dep-helloworld.yml 
+deployment.extensions "helloworld-dep" created
+smd-mac:ora-jul29-dock-kube smd$ kubectl get pods
+NAME                              READY     STATUS    RESTARTS   AGE
+helloworld-dep-6b5cd64d8d-kggv8   1/1       Running   0          <invalid>
+smd-mac:ora-jul29-dock-kube smd$ kubectl describe deployment helloworld 
+Name:                   helloworld-dep
+Namespace:              default
+CreationTimestamp:      Thu, 01 Aug 2019 10:03:04 +0530
+Labels:                 app=helloworld
+Annotations:            deployment.kubernetes.io/revision=1
+                        kubectl.kubernetes.io/last-applied-configuration={"apiVersion":"extensions/v1beta1","kind":"Deployment","metadata":{"annotations":{},"name":"helloworld-dep","namespace":"default"},"spec":{"replicas":1...
+Selector:               app=helloworld
+Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  1 max unavailable, 1 max surge
+Pod Template:
+  Labels:  app=helloworld
+  Containers:
+   web:
+    Image:        nginx:mainline
+    Port:         80/TCP
+    Host Port:    0/TCP
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   helloworld-dep-6b5cd64d8d (1/1 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  10s   deployment-controller  Scaled up replica set helloworld-dep-6b5cd64d8d to 1
+
+smd-mac:ora-jul29-dock-kube smd$ 
+
+
+```
 
 
