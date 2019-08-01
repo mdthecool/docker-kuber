@@ -843,4 +843,12 @@ smd-mac:ora-jul29-dock-kube smd$
 
 ```
 
+#### deployment creates Relica set not Replication controller 
 
+```
+smd-mac:ora-jul29-dock-kube smd$ kubectl get rs 
+NAME                        DESIRED   CURRENT   READY     AGE
+helloworld-dep-6b5cd64d8d   1         1         1         1m
+smd-mac:ora-jul29-dock-kube smd$ 
+
+```
