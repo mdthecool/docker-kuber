@@ -1120,7 +1120,7 @@ smd-mac:ora-jul29-dock-kube smd$
 SERVICE IP .:  service PORT : 
 
 
-IP:                       10.104.58.204
+IP:                       10.104.58.204 .  - This IP address is valid with in the cluster (minicube it should work )
 Port:                     <unset>  8888/TCP
 	
 NODE PORT : NodePort:                 <unset>  31001/TCP 
@@ -1146,6 +1146,22 @@ smd-mac:ora-jul29-dock-kube smd$ kubectl logs -f helloworld-dep-6b5cd64d8d-4j2s4
 smd-mac:ora-jul29-dock-kube smd$ while true; do curl http://192.168.99.101:31001/; done  
 
 You can see logs flowing in both the POD's. 
+
+#### Connecting to container 
+
+smd-mac:ora-jul29-dock-kube smd$ kubectl exec -it helloworld-dep-6b5cd64d8d-4j2s4  -- sh 
+
+If POD has multiple containers then --container web can be given. If not it will connect first container.
+
+``` 
+cat /etc/resolve.conf 
+nameserver 10.96.0.10 
+``` 
+
+#### This named service is added to all so PODs can ping the services using name of the service "hw-svc"
+
+** This is service discovery feature ** 
+
 
 
 
