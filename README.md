@@ -1017,6 +1017,74 @@ smd-mac:ora-jul29-dock-kube smd$
 
 ``` 
 
+##### You can do the rollout of new image using deployment yaml file as well. 
+
+```
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: helloworld-dep
+spec:
+  revisionHistoryLimit: 10
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: helloworld
+    spec:
+      containers:
+      - name: web
+        image: nginx:1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: nginxport
+          containerPort: 80
+````
+
+Modified the image to nginx:1 instead of mainline or alpine. 
+
+```
+smd-mac:ora-jul29-dock-kube smd$ kubectl apply  -f k8s/dep/dep-helloworld.yml 
+
+smd-mac:ora-jul29-dock-kube smd$ kubectl get rs
+NAME                        DESIRED   CURRENT   READY     AGE
+helloworld-dep-5cdb68cc76   0         0         0         23m
+helloworld-dep-6b5cd64d8d   1         1         1         50m
+smd-mac:ora-jul29-dock-kube smd$ 
+
+``` 
+
+# K8 Services 
+
+*Services can enable communication with POD*
+
+* Node port is port of the POD specified by the selector -- Selector is what you define in deployment as selection name - app:helloworld **
+
+```
+smd-mac:ora-jul29-dock-kube smd$ kubectl apply -f k8s/service/svc-helloworld.yml 
+service "hw-svc" created
+
+smd-mac:ora-jul29-dock-kube smd$ kubectl describe service hw-svc 
+Name:                     hw-svc
+Namespace:                default
+Labels:                   <none>
+Annotations:              kubectl.kubernetes.io/last-applied-configuration={"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"hw-svc","namespace":"default"},"spec":{"ports":[{"nodePort":31001,"port":8888,...
+Selector:                 app=helloworld
+Type:                     NodePort
+IP:                       10.104.58.204
+Port:                     <unset>  8888/TCP
+TargetPort:               nginxport/TCP
+NodePort:                 <unset>  31001/TCP
+Endpoints:                172.17.0.4:80
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+smd-mac:ora-jul29-dock-kube smd$ 
+
+``` 
+
+minicubeip:31001 will serve the nginx 
 
 
 
