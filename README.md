@@ -1412,6 +1412,26 @@ root@k8smaster:/vagrant#
 
 
 
+Jenkins code is in Aditya github project. 
+
+
+#### Swith context 
+
+``` 
+➜  ora-jul29-dock-kube git:(master) ✗ kubectl config get-contexts 
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+*         kubernetes-admin@kubernetes   kubernetes   kubernetes-admin   
+➜  ora-jul29-dock-kube git:(master) ✗ kubectl config use-context kubernetes-admin@kubernetes 
+Switched to context "kubernetes-admin@kubernetes".
+➜  ora-jul29-dock-kube git:(master) ✗ kubectl config get-contexts                            
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+*         kubernetes-admin@kubernetes   kubernetes   kubernetes-admin   
+➜  ora-jul29-dock-kube git:(master) ✗ 
+
+```
+
+
+
 
 
 
