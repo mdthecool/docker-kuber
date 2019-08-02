@@ -1187,6 +1187,13 @@ nameserver 10.96.0.10
 ![alt text](https://github.com/mdthecool/docker-kuber/blob/master/app/i1.png)
 
 
+
+# NETWORKING DIAGRAM 
+
+
+![alt text](https://github.com/mdthecool/docker-kuber/blob/master/app/i2.png)
+
+
 Starting kube  setup.txt --- Follow the commands. 
 
 root@k8smaster:/home/vagrant# kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=192.167.10.70  
