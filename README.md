@@ -1304,4 +1304,121 @@ root@k8snode1:/home/vagrant#
 ``` 
 
 
- 
+
+Canal is third party software should be conifgured manually as a POD. 
+
+
+
+eth1 in canal.yaml is the only change we have to do. 
+
+```
+
+root@k8smaster:/vagrant# kubectl apply -f rbac.yml 
+clusterrole.rbac.authorization.k8s.io/calico created
+clusterrole.rbac.authorization.k8s.io/flannel created
+clusterrolebinding.rbac.authorization.k8s.io/canal-flannel created
+clusterrolebinding.rbac.authorization.k8s.io/canal-calico created
+root@k8smaster:/vagrant# kubectl apply -f canal.yml 
+configmap/canal-config created
+daemonset.extensions/canal created
+customresourcedefinition.apiextensions.k8s.io/felixconfigurations.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/bgpconfigurations.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/ippools.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/clusterinformations.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/globalnetworkpolicies.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/networkpolicies.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/globalnetworksets.crd.projectcalico.org created
+customresourcedefinition.apiextensions.k8s.io/hostendpoints.crd.projectcalico.org created
+serviceaccount/canal created
+root@k8smaster:/vagrant# 
+
+
+
+```
+
+
+#### Setup end to end jenkins with docker on master node:
+
+
+```
+
+➜  ora-jul29-dock-kube git:(master) ✗ cat build-machine.txt 
+
+-------------------------------------------------Dockerfile--------------------------------------------------
+FROM jenkins/jenkins:lts
+USER root
+RUN apt-get update -qq \
+    && apt-get install -qqy apt-transport-https ca-certificates curl gnupg2 software-properties-common \
+    && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
+    && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
+    && apt-get update  -qq \
+    && apt-get install docker-ce=17.09.0~ce-0~debian -y
+RUN usermod -aG docker jenkins
+RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && mv kubectl /bin && chmod +x /bin/kubectl
+RUN apt-get install -y git
+----------------------------------------------------------------------------------------------------------------
+
+ docker container run -d -v /var/run/docker.sock:/var/run/docker.sock -v /etc/kubernetes/admin.conf:/etc/config -e KUBECONFIG=/etc/config -v /vagrant/jenkins_home5:/var/jenkins_home -p 9090:8080 build-machine
+➜  ora-jul29-dock-kube git:(master) ✗ 
+
+``` 
+
+#### -v /var/run/docker.sock:/var/run/docker.sock -- This makes sure that docker container in master talks to external dockerd that is running on the master node - Jenkins docker can not run dockerd. docker is just the client. 
+
+```
+
+root@k8smaster:/vagrant# docker exec f349b61d829cb35e5a3618103283c903d195a4d64d56041e0b5cbb5a74dc224c docker container ls 
+CONTAINER ID        IMAGE                    COMMAND                  CREATED             STATUS              PORTS                               NAMES
+f349b61d829c        build-machine            "/sbin/tini -- /us..."   4 minutes ago       Up 4 minutes        50000/tcp, 0.0.0.0:9090->8080/tcp   zealous_hawking
+4dd4cc758df7        quay.io/coreos/flannel   "/opt/bin/flanneld..."   About an hour ago   Up About an hour                                        k8s_kube-flannel_canal-j6z8t_kube-system_d10e10de-b479-4e77-98bc-74304409fc5c_0
+73c8f27da41b        eb516548c180             "/coredns -conf /e..."   About an hour ago   Up About an hour                                        k8s_coredns_coredns-5c98db65d4-pbkrx_kube-system_0bf3e113-faad-432c-a702-7d69b18baecd_0
+899d8187881e        eb516548c180             "/coredns -conf /e..."   About an hour ago   Up About an hour                                        k8s_coredns_coredns-5c98db65d4-cnm4b_kube-system_3f378a24-82f9-4d22-b0fb-8757411fa4bd_0
+3d6014ddee2f        k8s.gcr.io/pause:3.1     "/pause"                 About an hour ago   Up About an hour                                        k8s_POD_coredns-5c98db65d4-cnm4b_kube-system_3f378a24-82f9-4d22-b0fb-8757411fa4bd_0
+3a1492d152ac        k8s.gcr.io/pause:3.1     "/pause"                 About an hour ago   Up About an hour                                        k8s_POD_coredns-5c98db65d4-pbkrx_kube-system_0bf3e113-faad-432c-a702-7d69b18baecd_0
+3c19d1964c07        quay.io/calico/cni       "/install-cni.sh"        About an hour ago   Up About an hour                                        k8s_install-cni_canal-j6z8t_kube-system_d10e10de-b479-4e77-98bc-74304409fc5c_0
+fe000d099e85        quay.io/calico/node      "start_runit"            About an hour ago   Up About an hour                                        k8s_calico-node_canal-j6z8t_kube-system_d10e10de-b479-4e77-98bc-74304409fc5c_0
+2e8ecdedd8ca        k8s.gcr.io/pause:3.1     "/pause"                 About an hour ago   Up About an hour                                        k8s_POD_canal-j6z8t_kube-system_d10e10de-b479-4e77-98bc-74304409fc5c_0
+7f2fffa30e26        89a062da739d             "/usr/local/bin/ku..."   2 hours ago         Up 2 hours                                              k8s_kube-proxy_kube-proxy-z6j6x_kube-system_d1e71d88-7785-4fa5-aee8-a16b08065a80_0
+15794cab57f3        k8s.gcr.io/pause:3.1     "/pause"                 2 hours ago         Up 2 hours                                              k8s_POD_kube-proxy-z6j6x_kube-system_d1e71d88-7785-4fa5-aee8-a16b08065a80_0
+df98af99abde        b0b3c4c404da             "kube-scheduler --..."   2 hours ago         Up 2 hours                                              k8s_kube-scheduler_kube-scheduler-k8smaster_kube-system_ecae9d12d3610192347be3d1aa5aa552_0
+34cc4ef6ff24        2c4adeb21b4f             "etcd --advertise-..."   2 hours ago         Up 2 hours                                              k8s_etcd_etcd-k8smaster_kube-system_e5cd44264957d2c95fa822f9036af82e_0
+f45b0d38bf1f        d75082f1d121             "kube-controller-m..."   2 hours ago         Up 2 hours                                              k8s_kube-controller-manager_kube-controller-manager-k8smaster_kube-system_bbfba61185a8e7737ec27dbd6735a1d8_0
+8bb6a765c0e5        68c3eb07bfc3             "kube-apiserver --..."   2 hours ago         Up 2 hours                                              k8s_kube-apiserver_kube-apiserver-k8smaster_kube-system_3acb31820e6af7646ebbd616e5b8a20f_0
+f69590ce7eae        k8s.gcr.io/pause:3.1     "/pause"                 2 hours ago         Up 2 hours                                              k8s_POD_kube-scheduler-k8smaster_kube-system_ecae9d12d3610192347be3d1aa5aa552_0
+eedd600a1561        k8s.gcr.io/pause:3.1     "/pause"                 2 hours ago         Up 2 hours                                              k8s_POD_etcd-k8smaster_kube-system_e5cd44264957d2c95fa822f9036af82e_0
+c73268cbf9a5        k8s.gcr.io/pause:3.1     "/pause"                 2 hours ago         Up 2 hours                                              k8s_POD_kube-controller-manager-k8smaster_kube-system_bbfba61185a8e7737ec27dbd6735a1d8_0
+598e63a3c1a1        k8s.gcr.io/pause:3.1     "/pause"                 2 hours ago         Up 2 hours                                              k8s_POD_kube-apiserver-k8smaster_kube-system_3acb31820e6af7646ebbd616e5b8a20f_0
+
+
+```
+
+#### . -v /etc/kubernetes/admin.conf:/etc/config -e KUBECONFIG=/etc/config   This is to make sure kubctl can connect to kube cluster that master of 
+
+```
+root@k8smaster:/vagrant# docker exec f349b61d829cb35e5a3618103283c903d195a4d64d56041e0b5cbb5a74dc224c kubectl get nodes 
+NAME        STATUS   ROLES    AGE    VERSION
+k8smaster   Ready    master   140m   v1.15.1
+k8snode1    Ready    <none>   102m   v1.15.1
+root@k8smaster:/vagrant# 
+
+
+docker exec f349b61d829cb35e5a3618103283c903d195a4d64d56041e0b5cbb5a74dc224c cat /var/jenkins_home/secrets/initialAdminPassword 
+579bd12812434ff2ab85fa6b69631181
+root@k8smaster:/vagrant# 
+
+```
+#### https://github.com/AdityaSP/docker-devops 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
