@@ -1432,6 +1432,9 @@ CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPAC
 
 
 
+# K8 Volumes 
+
+##### Volumes (in the deoployment yaml) -->  Persistenet Volume Claim ( Logical config for pyhsical ) --- Persistent Volume 
 
 
 
